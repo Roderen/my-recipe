@@ -7,6 +7,7 @@ import RecipeCard from "../../RecipeCard/RecipeCard.tsx";
 import {Context} from "../../../main.tsx";
 import {useContext, useEffect, useState} from "react";
 import {collection, getDocs} from "firebase/firestore"
+import Loader from "../../Loader/Loader.tsx";
 
 const Recipes = () => {
   const fr = useContext<object | null>(Context);
@@ -42,7 +43,17 @@ const Recipes = () => {
             gap="30px"
             flexWrap="wrap"
           >
-            {!firestoreData.length ? 'Empty database' : firestoreData.map((item) =>
+            {!firestoreData.length ? (
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                width="100%"
+                marginTop="50px"
+              >
+                <Loader />
+              </Box>
+            ) : firestoreData.map((item) =>
               <RecipeCard
                 key={item.id}
                 id={item.id}
