@@ -5,8 +5,11 @@ import Header from "./components/Layout/Header/Header.tsx";
 import Recipes from "./components/Layout/Recipes/Recipes.tsx";
 import ViewRecipe from "./components/Layout/ViewRecipe/ViewRecipe.tsx";
 import CreateRecipe from './components/Layout/CreateRecipe/CreateRecipe.tsx';
+import {useFetchRecipes} from "./hook/useFetchRecipes.ts";
 
 function App() {
+  useFetchRecipes();
+
   return (
     <Box>
       <Header />

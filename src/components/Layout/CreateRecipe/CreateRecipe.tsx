@@ -1,10 +1,6 @@
 import {Box, Container, Input, FormGroup, FormLabel, Button} from "@mui/material";
 import {useForm} from "react-hook-form";
-import {useContext} from "react";
-import {v4} from "uuid";
-import {Context} from "../../../main.tsx";
-import {addDoc, collection} from "firebase/firestore";
-import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
+import {createRecipe} from "../../../services/recipeService.ts";
 
 type RecipeUpload = {
   title: string,
@@ -15,20 +11,12 @@ type RecipeUpload = {
 
 const CreateRecipe = () => {
   const {register, handleSubmit} = useForm<RecipeUpload>();
-  const fr = useContext<object | null>(Context);
 
   const onSubmit = async (e: RecipeUpload) => {
-    const img = ref(fr.storage, `recipe-images/${v4()}`)
-    const valRef = collection(fr.firestore, "recipes");
-    const file = e.image[0]
-
     try {
-      const data = await uploadBytes(img, file);
-      const val = await getDownloadURL(data.ref);
-      e.image = val;
-      await addDoc(valRef, e);
+      await createRecipe(e);
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   }
 
