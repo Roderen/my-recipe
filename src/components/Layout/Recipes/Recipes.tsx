@@ -4,26 +4,21 @@ import Title from "../../Text/Title/Title.tsx";
 import "./Recipes.scss";
 import Descr from "../../Text/Descr/Descr.tsx";
 import RecipeCard from "../../RecipeCard/RecipeCard.tsx";
-import {Context} from "../../../main.tsx";
-import {useContext, useEffect, useState} from "react";
-import {collection, getDocs} from "firebase/firestore"
+import {useEffect, useState} from "react";
 import Loader from "../../Loader/Loader.tsx";
+import {useRecipesStore} from "../../../store/store.tsx";
 
 const Recipes = () => {
-  const fr = useContext<object | null>(Context);
   const [firestoreData, setFirestoreData] = useState([]);
+  const data = useRecipesStore((state) => state.recipes);
 
-  const getData = async () => {
-    const val = collection(fr.firestore, "recipes");
-    const data = await getDocs(val)
-    setFirestoreData(data.docs.map(val => ({...val.data(), id: val.id})));
+  const getData = () => {
+    setFirestoreData(data);
   }
-
-  console.log(firestoreData)
 
   useEffect(() => {
     getData();
-  }, [fr])
+  }, [data])
 
   return (
     <>
