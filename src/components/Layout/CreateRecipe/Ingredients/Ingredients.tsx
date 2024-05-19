@@ -2,16 +2,17 @@ import {Box, Button, Input} from '@mui/material';
 import {useState} from 'react';
 
 interface IngredientsProps {
-  onIngredientsChange: (selectedIngredients: string[]) => void;
+  onIngredientsChange: (selectedIngredients: string) => void;
+  ingredientsList: string[];
+  error?: object;
 }
 
-const Ingredients = ({onIngredientsChange}: IngredientsProps) => {
-  const [ingredientsInput, setIngredientsInput] = useState('');
-  const [ingredientsList, setIngredientsList] = useState<string[]>([]);
+const Ingredients = ({onIngredientsChange, ingredientsList, error}: IngredientsProps) => {
+  const [ingredientsInput, setIngredientsInput] = useState<string>('');
 
   const handleClick = () => {
-    setIngredientsList([...ingredientsList, ingredientsInput]);
-    onIngredientsChange(ingredientsList);
+    onIngredientsChange(ingredientsInput);
+    setIngredientsInput('');
   }
 
   return (
@@ -19,9 +20,10 @@ const Ingredients = ({onIngredientsChange}: IngredientsProps) => {
       <Box sx={{display: "flex", alignItems: "stretch", gap: "10px"}}>
         <Input
           disableUnderline={true}
-          sx={{border: "1px solid #eee"}}
+          sx={error ? {border: "1px solid red"} : {border: "1px solid #eee"}}
           type="text"
           onChange={e => setIngredientsInput(e.target.value)}
+          value={ingredientsInput}
         />
         <Button type="button"
                 onClick={handleClick}

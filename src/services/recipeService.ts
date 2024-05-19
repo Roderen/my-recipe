@@ -14,7 +14,8 @@ type CreateRecipe = {
   title: string,
   descr: string,
   by: string,
-  image: File | string
+  image: File | string,
+  ingredients: string[],
 }
 
 export const fetchRecipes = async () => {

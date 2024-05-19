@@ -6,6 +6,7 @@ interface Recipe {
   descr: string;
   by: string;
   image: string;
+  ingredients: string[];
 }
 
 interface RecipeStore {
