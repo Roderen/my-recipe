@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import {Box, Button, Container, IconButton, InputBase, Paper, Typography} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {Link} from "react-router-dom";
+import {useRecipesStore} from "../../../store/store.tsx";
 
 const Header = () => {
-  function handleSubmit(e: React.ChangeEvent<HTMLFormElement>) {
+  const [searchInput, setSearchInput] = useState("");
+  const setSearchTerm = useRecipesStore(store => store.setSearchTerm);
+
+  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(searchInput)
+    setSearchTerm(searchInput);
   }
 
   return (
@@ -42,6 +48,7 @@ const Header = () => {
                   sx={{ml: 1, flex: 1}}
                   placeholder="Search"
                   inputProps={{'aria-label': 'Search'}}
+                  onChange={e => setSearchInput(e.target.value)}
                 />
                 <IconButton type="submit" sx={{p: '10px'}} aria-label="search">
                   <SearchIcon />

@@ -4,21 +4,18 @@ import Title from "../../Text/Title/Title.tsx";
 import "./Recipes.scss";
 import Descr from "../../Text/Descr/Descr.tsx";
 import RecipeCard from "../../RecipeCard/RecipeCard.tsx";
-import {useEffect, useState} from "react";
 import Loader from "../../Loader/Loader.tsx";
 import {useRecipesStore} from "../../../store/store.tsx";
 
 const Recipes = () => {
-  const [firestoreData, setFirestoreData] = useState([]);
   const data = useRecipesStore((state) => state.recipes);
+  const searchTerm = useRecipesStore(state => state.searchTerm);
 
-  const getData = () => {
-    setFirestoreData(data);
-  }
-
-  useEffect(() => {
-    getData();
-  }, [data])
+    const filteredRecipes = searchTerm
+        ? data.filter(recipe =>
+            recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        : data;
 
   return (
     <>
@@ -38,7 +35,7 @@ const Recipes = () => {
             gap="30px"
             flexWrap="wrap"
           >
-            {!firestoreData.length ? (
+            {!filteredRecipes.length ? (
               <Box
                 display="flex"
                 alignItems="center"
@@ -48,7 +45,7 @@ const Recipes = () => {
               >
                 <Loader />
               </Box>
-            ) : firestoreData.map((item) =>
+            ) : filteredRecipes.map((item) =>
               <RecipeCard
                 key={item.id}
                 id={item.id}
