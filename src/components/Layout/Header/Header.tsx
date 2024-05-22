@@ -33,29 +33,28 @@ const Header = () => {
             alignItems: "center",
             columnGap: 8,
             flexWrap: "nowrap",
-            width: "100%"
           }}>
             <Box sx={{ flexShrink: 0 }}>
               <Link to="/" style={{textDecoration: "none"}}>
                 <Typography color="green" fontSize="20px">My Recipes</Typography></Link>
             </Box>
-            <Box sx={{ maxWidth: "400px", width: "100%" }}>
-              <Paper
+          </Box>
+          <Box sx={{ maxWidth: "400px", width: "100%" }}>
+            <Paper
                 component="form"
                 onSubmit={handleSubmit}
                 sx={{p: '2px 4px', display: 'flex', alignItems: 'center', width: "100%"}}
-              >
-                <InputBase
+            >
+              <InputBase
                   sx={{ml: 1, flex: 1}}
                   placeholder="Search"
                   inputProps={{'aria-label': 'Search'}}
                   onChange={e => setSearchInput(e.target.value)}
-                />
-                <IconButton type="submit" sx={{p: '10px'}} aria-label="search">
-                  <SearchIcon />
-                </IconButton>
-              </Paper>
-            </Box>
+              />
+              <IconButton type="submit" sx={{p: '10px'}} aria-label="search">
+                <SearchIcon />
+              </IconButton>
+            </Paper>
           </Box>
           <Box sx={{
             display: "flex",
