@@ -6,16 +6,26 @@ import Descr from "../../Text/Descr/Descr.tsx";
 import RecipeCard from "../../RecipeCard/RecipeCard.tsx";
 import Loader from "../../Loader/Loader.tsx";
 import {useRecipesStore} from "../../../store/store.tsx";
+import {useEffect, useState } from "react";
 
 const Recipes = () => {
   const data = useRecipesStore((state) => state.recipes);
   const searchTerm = useRecipesStore(state => state.searchTerm);
+  const [loading, setLoading] = useState(true);
 
     const filteredRecipes = searchTerm
         ? data.filter(recipe =>
             recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
         )
         : data;
+
+  useEffect(() => {
+    if (data.length === 0) {
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
+  }, [data]);
 
   return (
     <>
@@ -35,7 +45,7 @@ const Recipes = () => {
             gap="30px"
             flexWrap="wrap"
           >
-            {!filteredRecipes.length ? (
+            {loading ? (
               <Box
                 display="flex"
                 alignItems="center"
@@ -45,7 +55,9 @@ const Recipes = () => {
               >
                 <Loader />
               </Box>
-            ) : filteredRecipes.map((item) =>
+            ): filteredRecipes.length === 0 ? (
+                <p>Ничего нет!</p>
+            ): filteredRecipes.map((item) =>
               <RecipeCard
                 key={item.id}
                 id={item.id}

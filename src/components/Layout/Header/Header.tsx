@@ -13,6 +13,7 @@ const Header = () => {
     e.preventDefault();
     console.log(searchInput)
     setSearchTerm(searchInput);
+    setSearchInput("");
   }
 
   return (
